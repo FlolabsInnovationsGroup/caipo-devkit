@@ -1,0 +1,7 @@
+# ESP32-S3-specific overrides.
+
+# Conservative flash size; raise once the actual module (N4/N8/N16) is confirmed.
+CONFIG_ESPTOOLPY_FLASHSIZE_4MB=y
+
+# Console over the S3 built-in USB Serial/JTAG (same port used for flashing/OpenOCD).
+CONFIG_ESP_CONSOLE_USB_SERIAL_JTAG=y
