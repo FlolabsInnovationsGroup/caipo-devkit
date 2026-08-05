@@ -9,7 +9,7 @@ Everything ships together in one repo on purpose: the firmware, the Pi software,
 | Directory | Contents | Status |
 |---|---|---|
 | [`firmware/`](firmware/) | ESP32-S3 firmware (ESP-IDF, C) — see its [README](firmware/README.md) | scaffolded |
-| `software/` | Raspberry Pi software (Python package `caipo_pi`) | planned |
+| [`software/`](software/) | Raspberry Pi software (Python package `caipo_pi`) — see its [README](software/README.md) | scaffolded |
 | `protocol/` | Single source of truth for the UART contract (`caipo.protocol.yaml` + codegen + golden test vectors) | planned |
 | `hardware/` | KiCad schematic, PCB, BOM, datasheets | planned |
 | `docs/` | Architecture docs, runbooks, ADRs, and the canonical pin map (`PINMAP.md`) | planned |
@@ -38,7 +38,11 @@ idf.py -p <PORT> flash monitor
 
 See [`firmware/README.md`](firmware/README.md) for details.
 
-### Pi software / protocol / hardware
+### Pi software (Raspberry Pi)
+
+Directory layout only for now — no implementation yet. Once `caipo_pi` has code, build/run instructions will live in [`software/README.md`](software/README.md).
+
+### protocol / hardware
 
 Not yet in the repo — see the layout table above for where each will land.
 
