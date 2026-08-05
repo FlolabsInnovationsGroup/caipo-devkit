@@ -1,0 +1,10 @@
+# Base configuration for the Caipo devkit (target-independent).
+# ESP32-S3-specific overrides live in sdkconfig.defaults.esp32s3.
+# The generated sdkconfig is gitignored - persistent settings go here.
+
+# Custom partition table
+CONFIG_PARTITION_TABLE_CUSTOM=y
+CONFIG_PARTITION_TABLE_CUSTOM_FILENAME="partitions.csv"
+
+# Logging
+CONFIG_LOG_DEFAULT_LEVEL_INFO=y
