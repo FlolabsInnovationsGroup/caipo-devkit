@@ -1,0 +1,133 @@
+# Caipo UART protocol — single source of truth.
+#
+# This file is hand-edited; everything downstream of it is generated:
+#   - software/src/caipo_pi/comm/protocol.py  (Python codec)
+#   - firmware/components/caipo_protocol/{include/caipo_protocol.h,caipo_protocol.c}  (C codec)
+#
+# Run `python3 protocol/codegen/generate.py` after any change here. See protocol/README.md.
+#
+# This schema defines message *payloads* only: msg_type (u8) + seq (u8) + fields,
+# in declared order, little-endian, no padding. Framing (start/stop bytes, escaping,
+# CRC, retries) is a transport concern owned by uart_link (ESP) / comm/uart.py (Pi),
+# not this codec.
+
+version: 1
+
+enums:
+  WorkflowType:
+    QUICK_VIDEO: 1
+    AUDIO_ONLY: 2
+    SCHEDULED_WAKE: 3
+
+  ButtonEvent:
+    TAP: 1
+    DOUBLE_TAP: 2
+    LONG_PRESS: 3
+
+  ErrorCode:
+    UNKNOWN: 0
+    BUSY: 1
+    INVALID_PARAMS: 2
+    HARDWARE_FAULT: 3
+    TIMEOUT: 4
+    STORAGE_FULL: 5
+
+  ShutdownReason:
+    USER: 0
+    LOW_BATTERY: 1
+    SCHEDULED: 2
+
+messages:
+  - name: HEARTBEAT
+    id: 1
+    direction: either
+    fields:
+      - name: uptime_ms
+        type: u32
+
+  - name: PI_READY
+    id: 2
+    direction: pi_to_esp
+    fields:
+      - name: fw_major
+        type: u8
+      - name: fw_minor
+        type: u8
+      - name: fw_patch
+        type: u8
+
+  - name: START_WORKFLOW
+    id: 3
+    direction: esp_to_pi
+    fields:
+      - name: workflow
+        type: enum:WorkflowType
+      - name: duration_s
+        type: u16
+      - name: scheduled_delay_s
+        type: u16
+
+  - name: STOP_WORKFLOW
+    id: 4
+    direction: esp_to_pi
+    fields: []
+
+  - name: ACK
+    id: 5
+    direction: pi_to_esp
+    fields:
+      - name: ack_seq
+        type: u8
+
+  - name: COMPLETE
+    id: 6
+    direction: pi_to_esp
+    fields:
+      - name: ack_seq
+        type: u8
+      - name: file_count
+        type: u8
+      - name: bytes_captured
+        type: u32
+
+  - name: ERROR
+    id: 7
+    direction: pi_to_esp
+    fields:
+      - name: ack_seq
+        type: u8
+      - name: code
+        type: enum:ErrorCode
+      - name: message
+        type: string
+        max_length: 64
+
+  - name: BATTERY_STATUS
+    id: 8
+    direction: esp_to_pi
+    fields:
+      - name: percent
+        type: u8
+      - name: voltage_mv
+        type: u16
+      - name: charging
+        type: bool
+
+  - name: BUTTON_EVENT
+    id: 9
+    direction: esp_to_pi
+    fields:
+      - name: event
+        type: enum:ButtonEvent
+
+  - name: SHUTDOWN_REQUEST
+    id: 10
+    direction: esp_to_pi
+    fields:
+      - name: reason
+        type: enum:ShutdownReason
+
+  - name: SHUTDOWN_READY
+    id: 11
+    direction: pi_to_esp
+    fields: []

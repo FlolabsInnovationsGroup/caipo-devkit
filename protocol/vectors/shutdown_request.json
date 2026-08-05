@@ -1,0 +1,8 @@
+[
+  {
+    "description": "low battery triggers shutdown",
+    "seq": 3,
+    "fields": { "reason": "LOW_BATTERY" },
+    "hex": "0a0301"
+  }
+]
