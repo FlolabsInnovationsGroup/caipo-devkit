@@ -1,0 +1,32 @@
+[
+  {
+    "description": "storage full with a short message",
+    "seq": 9,
+    "fields": {
+      "ack_seq": 42,
+      "code": "STORAGE_FULL",
+      "message": "disk full"
+    },
+    "hex": "07092a05096469736b2066756c6c"
+  },
+  {
+    "description": "empty message string",
+    "seq": 1,
+    "fields": {
+      "ack_seq": 1,
+      "code": "UNKNOWN",
+      "message": ""
+    },
+    "hex": "0701010000"
+  },
+  {
+    "description": "message at max_length (64 bytes)",
+    "seq": 2,
+    "fields": {
+      "ack_seq": 2,
+      "code": "INVALID_PARAMS",
+      "message": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+    },
+    "hex": "070202024078787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878"
+  }
+]
