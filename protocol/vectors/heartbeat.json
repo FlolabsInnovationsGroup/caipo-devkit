@@ -1,0 +1,20 @@
+[
+  {
+    "description": "typical uptime",
+    "seq": 7,
+    "fields": { "uptime_ms": 123456 },
+    "hex": "010740e20100"
+  },
+  {
+    "description": "uptime_ms at zero (boot instant)",
+    "seq": 0,
+    "fields": { "uptime_ms": 0 },
+    "hex": "010000000000"
+  },
+  {
+    "description": "uptime_ms at u32 max",
+    "seq": 255,
+    "fields": { "uptime_ms": 4294967295 },
+    "hex": "01ffffffffff"
+  }
+]
