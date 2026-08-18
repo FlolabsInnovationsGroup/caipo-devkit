@@ -1,8 +1,26 @@
 #include <stdio.h>
+#include "freertos/FreeRTOS.h"
+#include "freertos/queue.h"
 
 #include "led_ws2812.h"
+#include "mic_inmp441.h"
+#include "spk_max98357.h"
+
+QueueHandle_t audio_queue = NULL; // Global queue for audio transfer from microphone to speaker
 
 void app_main(void)
 {
-    blink();
+    // Create queue for audio data transfer (queue holds pointer to audio buffer)
+    audio_queue = xQueueCreate(1, BUFF_SIZE);
+    if (audio_queue == NULL) {
+        printf("Failed to create audio queue\n");
+        return;
+    }
+
+    // LEDs test code
+    //blink();
+
+    // Microphone and speaker test code
+    mic_main();   
+    spk_main();
 }

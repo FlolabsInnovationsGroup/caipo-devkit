@@ -73,7 +73,7 @@ void blink(void)
         if (s_led_state) {
             for(uint8_t i = 0; i < CAIPO_LED_COUNT; i++){
                 /* Set the LED pixel using RGBW from 0 (0%) to 255 (100%) for each color */
-                ctrl_led(led_strip, i, 4, 0, 0, 0);
+                ctrl_led(led_strip, i, 1, 0, 0, 0);
             }
             /* Refresh the strip to send data */
             led_strip_refresh(led_strip);
