@@ -1,0 +1,44 @@
+menu "Caipo touch sensor (TTP223)"
+
+    config CAIPO_TOUCH_POLL_MS
+        int "Polling interval (ms)"
+        range 10 200
+        default 50
+        help
+            How often the driver task samples the TTP223 output.
+            Doc FLD-1 recommends 50 ms.
+
+    config CAIPO_TOUCH_DEBOUNCE_MS
+        int "Debounce time (ms)"
+        range 0 200
+        default 20
+        help
+            The debounced level flips only after the new level has been seen
+            for this long (at least 2 consecutive polls regardless).
+
+    config CAIPO_TOUCH_LONGPRESS_MS
+        int "Long-press threshold (ms)"
+        range 300 10000
+        default 2000
+        help
+            Hold duration that fires TOUCH_EVENT_LONG_PRESS (while still held).
+            Doc FLD-1 specifies 2 s.
+
+    config CAIPO_TOUCH_DOUBLETAP_WINDOW_MS
+        int "Double-tap window (ms)"
+        range 100 1000
+        default 300
+        help
+            A second press starting within this window after a release fires
+            TOUCH_EVENT_DOUBLE_TAP. Also the delay before a lone TAP is
+            confirmed.
+
+    config CAIPO_TOUCH_STARTUP_BLANK_MS
+        int "Startup blanking (ms)"
+        range 0 5000
+        default 500
+        help
+            The TTP223 self-calibrates after power-up and its output is
+            undefined; events are suppressed until this time since boot.
+
+endmenu

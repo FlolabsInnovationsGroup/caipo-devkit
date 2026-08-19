@@ -1,0 +1,32 @@
+{
+  // Multi-root workspace: open THIS file in VS Code (File > Open Workspace from File).
+  // The ESP-IDF extension treats each workspace folder as a candidate project root,
+  // so point it at "firmware" (ESP-IDF: Pick a Workspace Folder to Use), not the repo root.
+  "folders": [
+    {
+      "name": "firmware (ESP-IDF)",
+      "path": "firmware"
+    },
+    {
+      "name": "caipo-devkit (repo)",
+      "path": "."
+    }
+  ],
+  "settings": {
+    "idf.extensionActivationMode": "always",
+    "idf.currentSetup": "C:\\esp\\v5.5.4\\esp-idf",
+    "idf.openOcdConfigs": [
+      "board/esp32s3-builtin.cfg"
+    ],
+    "idf.customExtraVars": {
+      "IDF_TARGET": "esp32s3"
+    },
+    "C_Cpp.intelliSenseEngine": "default",
+    "clangd.path": "C:\\Espressif\\tools\\esp-clang\\esp-19.1.2_20250312\\esp-clang\\bin\\clangd.exe",
+    "clangd.arguments": [
+      "--background-index",
+      "--query-driver=**",
+      "--compile-commands-dir=${workspaceFolder:firmware (ESP-IDF)}\\build"
+    ]
+  }
+}
