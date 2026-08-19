@@ -1,0 +1,8 @@
+[
+  {
+    "description": "double tap",
+    "seq": 2,
+    "fields": { "event": "DOUBLE_TAP" },
+    "hex": "090202"
+  }
+]

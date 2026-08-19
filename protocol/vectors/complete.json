@@ -1,0 +1,8 @@
+[
+  {
+    "description": "2 files, 1 MiB captured",
+    "seq": 6,
+    "fields": { "ack_seq": 42, "file_count": 2, "bytes_captured": 1048576 },
+    "hex": "06062a0200001000"
+  }
+]

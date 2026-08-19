@@ -1,0 +1,14 @@
+[
+  {
+    "description": "high charge, plugged in",
+    "seq": 1,
+    "fields": { "percent": 87, "voltage_mv": 4123, "charging": true },
+    "hex": "0801571b1001"
+  },
+  {
+    "description": "low charge, not charging",
+    "seq": 1,
+    "fields": { "percent": 15, "voltage_mv": 3550, "charging": false },
+    "hex": "08010fde0d00"
+  }
+]
