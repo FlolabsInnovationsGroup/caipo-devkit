@@ -22,7 +22,8 @@ static void on_touch(touch_event_t event, void *ctx)
 }
 
 void app_main(void)
-{
+{  
+    /*
     // Create queue for audio data transfer (queue holds pointer to audio buffer)
     audio_queue = xQueueCreate(1, BUFF_SIZE);
     if (audio_queue == NULL) {
@@ -31,11 +32,11 @@ void app_main(void)
     }
 
     // LEDs test code
-    //blink();
+    blink();
 
     // Microphone and speaker test code
     mic_main();   
-    spk_main();
+    spk_main();*/
 
     ESP_ERROR_CHECK(touch_init());
     ESP_ERROR_CHECK(touch_register_callback(on_touch, NULL));

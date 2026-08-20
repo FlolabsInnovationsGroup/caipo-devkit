@@ -4,7 +4,7 @@
 #define BOARD_PINS_H
  
 // Power pins (not GPIOs, listed for reference only)
-// 5V   -> VBUS
+// 5V   -> VBUS, only when pluged into USB-C
 // GND  -> Ground
 // 3V3  -> Regulated 3.3V output, up to 700mA
  
@@ -16,7 +16,7 @@
 #define I2S_SPEAKER_BCLK            GPIO_NUM_5   // Clock pin for the speaker
 #define I2S_SPEAKER_WS              GPIO_NUM_6   // Word Select pin for the speaker
 #define I2S_SPEAKER_DOUT            GPIO_NUM_7   // Data pin for the speaker
-#define D9_GPIO_NUM                 GPIO_NUM_8   // SPI MISO, ADC, Touch8
+#define CAIPO_PIN_TOUCH             GPIO_NUM_8   // Pin for the touch sensor
 #define D10_GPIO_NUM                GPIO_NUM_9   // SPI MOSI, ADC, Touch9
 #define D12_GPIO_NUM                GPIO_NUM_41  // ADC, Touch13 -- shared w/ mic CLK if Sense board active
 #define D11_GPIO_NUM                GPIO_NUM_42  // ADC, Touch12 -- shared w/ mic DATA if Sense board active
