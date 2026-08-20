@@ -1,0 +1,14 @@
+[
+  {
+    "description": "quick video, 30s, no scheduling",
+    "seq": 42,
+    "fields": { "workflow": "QUICK_VIDEO", "duration_s": 30, "scheduled_delay_s": 0 },
+    "hex": "032a011e000000"
+  },
+  {
+    "description": "scheduled wake, 1 hour delay",
+    "seq": 1,
+    "fields": { "workflow": "SCHEDULED_WAKE", "duration_s": 0, "scheduled_delay_s": 3600 },
+    "hex": "0301030000100e"
+  }
+]

@@ -1,0 +1,8 @@
+[
+  {
+    "description": "acknowledges seq 42",
+    "seq": 5,
+    "fields": { "ack_seq": 42 },
+    "hex": "05052a"
+  }
+]

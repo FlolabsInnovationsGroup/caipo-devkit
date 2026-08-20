@@ -1,0 +1,8 @@
+[
+  {
+    "description": "boot version 1.2.3",
+    "seq": 0,
+    "fields": { "fw_major": 1, "fw_minor": 2, "fw_patch": 3 },
+    "hex": "0200010203"
+  }
+]
