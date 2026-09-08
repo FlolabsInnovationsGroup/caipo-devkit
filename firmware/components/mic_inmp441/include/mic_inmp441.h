@@ -1,4 +1,5 @@
-#define BUFF_SIZE 2048
+#define BUFF_SIZE 2046
+#define CLOCK_SPEED 48000
 
 // Functions declaration
 void i2s_read_task(void *args); // Task for reading the microphone

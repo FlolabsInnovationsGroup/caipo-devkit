@@ -10,11 +10,11 @@
  
 // Digital / Analog / Touch pins
 #define CAIPO_PIN_LED_DATA          GPIO_NUM_1   // Data pin for the LED strip
-#define I2S_MICROPHONE_BCLK         GPIO_NUM_2   // Clock pin for the microphone
-#define I2S_MICROPHONE_WS           GPIO_NUM_3   // Word Select pin for the microphone
+#define I2S_BCLK                    GPIO_NUM_2   // Clock pin for I2S
+#define I2S_WS                      GPIO_NUM_3   // Word Select pin for I2S
 #define I2S_MICROPHONE_DIN          GPIO_NUM_4   // Data pin for the microphone
-#define I2S_SPEAKER_BCLK            GPIO_NUM_5   // Clock pin for the speaker
-#define I2S_SPEAKER_WS              GPIO_NUM_6   // Word Select pin for the speaker
+#define I2C_SDA                     GPIO_NUM_5   // Data pin for I2C
+#define I2C_SCL                     GPIO_NUM_6   // Clock pin for I2C
 #define I2S_SPEAKER_DOUT            GPIO_NUM_7   // Data pin for the speaker
 #define CAIPO_PIN_TOUCH             GPIO_NUM_8   // Pin for the touch sensor
 #define D10_GPIO_NUM                GPIO_NUM_9   // SPI MOSI, ADC, Touch9
