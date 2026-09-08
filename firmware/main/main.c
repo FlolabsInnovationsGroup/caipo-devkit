@@ -12,32 +12,32 @@ static const char *TAG = "main";
 
 QueueHandle_t audio_queue = NULL; // Global queue for audio transfer from microphone to speaker
 
-static void on_touch(touch_event_t event, void *ctx)
+/*static void on_touch(touch_event_t event, void *ctx)
 {
     (void)ctx;
     static const char *names[] = {
         "PRESS", "RELEASE", "TAP", "DOUBLE_TAP", "LONG_PRESS",
     };
     ESP_LOGI(TAG, "touch: %s", names[event]);
-}
+}*/
 
 void app_main(void)
 {  
-    /*
-    // Create queue for audio data transfer (queue holds pointer to audio buffer)
-    audio_queue = xQueueCreate(1, BUFF_SIZE);
+    
+    // Queue items are pointers to heap-allocated audio buffers.
+    audio_queue = xQueueCreate(1, sizeof(uint8_t *));
     if (audio_queue == NULL) {
         printf("Failed to create audio queue\n");
         return;
     }
 
-    // LEDs test code
-    blink();
+    /*// LEDs test code
+    blink();*/
 
     // Microphone and speaker test code
-    mic_main();   
-    spk_main();*/
+    mic_main();
+    spk_main();
 
-    ESP_ERROR_CHECK(touch_init());
-    ESP_ERROR_CHECK(touch_register_callback(on_touch, NULL));
+    /*ESP_ERROR_CHECK(touch_init());
+    ESP_ERROR_CHECK(touch_register_callback(on_touch, NULL));*/
 }

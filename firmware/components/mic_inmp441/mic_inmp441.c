@@ -15,6 +15,7 @@
 
 extern QueueHandle_t audio_queue; // External queue for audio data transfer
 i2s_chan_handle_t rx_chan; // I2S rx channel handler
+i2s_chan_handle_t tx_chan;
 
 
 void i2s_read_task(void *args)
@@ -33,15 +34,10 @@ void i2s_read_task(void *args)
         
         // Send data to the audio queue
         if (r_bytes > 0 && audio_queue != NULL) {
-            // Allocate a new buffer for the queue
-            uint8_t *tx_buf = (uint8_t *)malloc(r_bytes);
+            uint8_t *tx_buf = (uint8_t *)calloc(1, BUFF_SIZE);
             if (tx_buf != NULL) {
-                // Copy the read data to the new buffer
                 memcpy(tx_buf, r_buf, r_bytes);
-                
-                // Send the buffer pointer through the queue
                 if (xQueueSend(audio_queue, &tx_buf, pdMS_TO_TICKS(100)) != pdPASS) {
-                    // Queue is full, free the buffer and continue
                     free(tx_buf);
                 }
             }
@@ -56,17 +52,19 @@ void i2s_read_task(void *args)
 void i2s_mic_init_std(void)
 {
     i2s_chan_config_t rx_chan_cfg = I2S_CHANNEL_DEFAULT_CONFIG(I2S_NUM_AUTO, I2S_ROLE_MASTER);
-    ESP_ERROR_CHECK(i2s_new_channel(&rx_chan_cfg, NULL, &rx_chan));
+    rx_chan_cfg.dma_frame_num = 255;
+    ESP_ERROR_CHECK(i2s_new_channel(&rx_chan_cfg, &tx_chan, &rx_chan));
 
     i2s_std_config_t rx_std_cfg = {
-        .clk_cfg  = I2S_STD_CLK_DEFAULT_CONFIG(48000),
-        .clk_cfg.mclk_multiple = I2S_MCLK_MULTIPLE_384, // Is 384 when using 24-bit data width
-        .slot_cfg = I2S_STD_MSB_SLOT_DEFAULT_CONFIG(I2S_DATA_BIT_WIDTH_24BIT, I2S_SLOT_MODE_MONO),
+        .clk_cfg  = I2S_STD_CLK_DEFAULT_CONFIG(CLOCK_SPEED),
+        .clk_cfg.mclk_multiple = I2S_MCLK_MULTIPLE_384,
+        .slot_cfg = I2S_STD_PHILIPS_SLOT_DEFAULT_CONFIG(I2S_DATA_BIT_WIDTH_24BIT, I2S_SLOT_MODE_MONO),
         .slot_cfg.slot_mask = I2S_STD_SLOT_LEFT,
         .gpio_cfg = {
-            .bclk = I2S_MICROPHONE_BCLK,
-            .ws   = I2S_MICROPHONE_WS,
+            .bclk = I2S_BCLK,
+            .ws   = I2S_WS,
             .din  = I2S_MICROPHONE_DIN,
+            .dout = I2S_SPEAKER_DOUT,
             .invert_flags = {
                 .mclk_inv = false,
                 .bclk_inv = false,
@@ -75,6 +73,7 @@ void i2s_mic_init_std(void)
         },
     };
     ESP_ERROR_CHECK(i2s_channel_init_std_mode(rx_chan, &rx_std_cfg));
+    ESP_ERROR_CHECK(i2s_channel_init_std_mode(tx_chan, &rx_std_cfg));
 }
 
 void mic_main(void)
