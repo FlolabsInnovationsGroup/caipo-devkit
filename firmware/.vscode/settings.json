@@ -1,0 +1,18 @@
+{
+  "idf.currentSetup": "C:\\esp\\v5.5.4\\esp-idf",
+  "idf.openOcdConfigs": [
+    "board/esp32s3-builtin.cfg"
+  ],
+  "C_Cpp.errorSquiggles": "enabled",
+  "idf.customExtraVars": {
+    "IDF_TARGET": "esp32s3"
+  },
+  "clangd.path": "C:\\Espressif\\tools\\esp-clang\\esp-19.1.2_20250312\\esp-clang\\bin\\clangd.exe",
+  "clangd.arguments": [
+    "--background-index",
+    "--query-driver=**",
+    "--compile-commands-dir=c:\\Users\\abeau\\OneDrive\\Bureau\\Antoine\\Internship\\CAIPO\\caipo-devkit\\firmware\\build"
+  ],
+  "idf.flashType": "UART",
+  "idf.portWin": "COM6"
+}
