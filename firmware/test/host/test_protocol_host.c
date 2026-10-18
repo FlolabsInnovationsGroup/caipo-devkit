@@ -30,7 +30,7 @@ typedef struct {
     field_value_type_t type;
     union {
         char string[80];
-        long number;
+        long long number;
         bool boolean;
     } as;
 } field_kv_t;
@@ -103,10 +103,10 @@ static void parse_string_into(cursor_t *c, char *out, size_t out_cap) {
     out[n] = '\0';
 }
 
-static long parse_number(cursor_t *c) {
+static long long parse_number(cursor_t *c) {
     skip_ws(c);
     char *end = NULL;
-    long v = strtol(c->p, &end, 10);
+    long long v = strtoll(c->p, &end, 10);
     if (end == c->p) {
         die("json parse error: expected number, got '%c'", *c->p ? *c->p : '?');
     }
@@ -278,7 +278,7 @@ static const field_kv_t *find_field(const vector_case_t *v, const char *key) {
     return NULL;
 }
 
-static long field_int(const vector_case_t *v, const char *key) { return find_field(v, key)->as.number; }
+static long long field_int(const vector_case_t *v, const char *key) { return find_field(v, key)->as.number; }
 static bool field_bool(const vector_case_t *v, const char *key) { return find_field(v, key)->as.boolean; }
 static const char *field_str(const vector_case_t *v, const char *key) { return find_field(v, key)->as.string; }
 
