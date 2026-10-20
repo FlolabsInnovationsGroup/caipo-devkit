@@ -24,6 +24,24 @@ idf.py fullclean              # wipe the build directory
 
 Configuration is layered: `sdkconfig.defaults` (committed base config) + `sdkconfig.defaults.esp32s3` (S3-specific overrides). The generated live `sdkconfig` is machine-specific and gitignored — persistent settings go in the defaults files.
 
+## Simulate in Wokwi
+
+The Wokwi VS Code extension can boot this firmware on a simulated XIAO ESP32-S3
+(`wokwi.toml`, `diagram.json`). **Wokwi has no Bluetooth**, so the BLE link is
+compiled out there (`sdkconfig.wokwi` sets `CONFIG_CAIPO_BLE_ENABLED=n`) and
+`main` logs "BLE unavailable" and carries on with touch, LEDs, mic and UART.
+Pairing with the app can only be tested on real hardware.
+
+Build into a separate directory so the hardware build and its `sdkconfig` stay
+untouched, then press F1 > "Wokwi: Start Simulator":
+
+```sh
+idf.py -B build-wokwi -DIDF_TARGET=esp32s3 -DSDKCONFIG=build-wokwi/sdkconfig   "-DSDKCONFIG_DEFAULTS=sdkconfig.defaults;sdkconfig.defaults.esp32s3;sdkconfig.wokwi" build
+```
+
+The overlay also moves the console to UART0 (what Wokwi's monitor reads) with
+USB Serial/JTAG as secondary, so the same binary still prints on a real board.
+
 ## Debugging
 
 The ESP32-S3's built-in USB-JTAG is used with OpenOCD (`board/esp32s3-builtin.cfg`). VS Code users get this preconfigured via the ESP-IDF extension; clangd IntelliSense needs a successful build first (it reads `build/compile_commands.json`).
@@ -40,6 +58,12 @@ components/
                       (caipo_pins.h, kept in sync with docs/PINMAP.md).
   caipo_protocol/     GENERATED from /protocol — do not hand-edit.
                       Host-compilable codec, no IDF dependency.
+  ble_link/           NimBLE peripheral for the companion app: GATT per the
+                      agreed contract, LESC bonding, heartbeat, notify API.
+                      See docs/ble-link.md; hardware test procedure in
+                      docs/HANDOVER-ble-hardware-test.md.
+  r03_transfer/       R03 chunked-transfer codec + receiver/sender state
+                      machines. Pure C, host-tested (test/host/test_r03.c).
   uart_link/          Transport over caipo_protocol: RX/TX tasks, framing,
                       heartbeat, timeout, retry.
   power_mgr/          Power states, Pi enable pin (S13V30F5), low-battery

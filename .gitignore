@@ -19,6 +19,7 @@
 # Build artifacts and directories
 **/build/
 build/
+**/build-*/
 *.o
 *.a
 *.out
@@ -76,6 +77,7 @@ Desktop.ini
 
 # Claude Code
 CLAUDE.md
+.claude/
 
 # User-specific configuration files
 *.user

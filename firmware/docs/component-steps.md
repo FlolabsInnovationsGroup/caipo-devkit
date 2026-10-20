@@ -167,6 +167,32 @@ Status: **not started**
 
 Steps: TBD
 
+## ble_link + r03_transfer — companion app link
+
+Status: **v0 written 18 Oct 2026, not yet flashed.** Full description and a
+manual test script in [ble-link.md](ble-link.md).
+
+- [x] GATT per the agreed contract (service A1000000, four characteristics,
+      Battery Service), encrypted read/write flags, 128-bit UUID advertised,
+      name `CAIPO` + 4 hex digits
+- [x] LE Secure Connections, Just Works, bonding persisted in NVS; device
+      initiates pairing on connect; repeat-pairing handled; long press clears bonds
+- [x] Heartbeat `[0x10][counter]` every 1 s on A1000004 after encryption
+- [x] Connection parameter request: 15-30 ms interval, 6 s supervision timeout
+- [x] MTU 512 preferred; chunk payload = min(502, MTU - 3 - 7)
+- [x] R03 codec + receiver + sender as pure C with host tests
+- [x] main.c glue: event queue, inbound transfers verified and logged, touch
+      TAP sends a 3000-byte test transfer, GET_STATUS and SET_TIME answered
+- [ ] Build with ESP-IDF v5.5 (no IDF on the authoring machine; compile is the
+      first thing to do)
+- [ ] Smoke test with nRF Connect: pairing prompt, heartbeat, codec read,
+      hand-typed R03 transfer (script in ble-link.md)
+- [ ] Test with `caipo-live.apk` on Android, then iOS when a Mac exists
+- [ ] v1: Opus encode/decode, record on tap, storage partition + queue,
+      playback of the reply; battery from `battery_adc`
+- [ ] v2: PROPOSED commands needing the Pi (UART protocol v2 first), WiFi
+      provisioning, streaming
+
 ## caipo_protocol — message protocol (host-testable)
 
 Status: **not started**

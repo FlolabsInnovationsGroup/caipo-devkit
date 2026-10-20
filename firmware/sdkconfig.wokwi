@@ -1,0 +1,12 @@
+# Overlay for the Wokwi simulator (board-xiao-esp32-s3). Applied LAST, on top
+# of sdkconfig.defaults + sdkconfig.defaults.esp32s3, into a separate build
+# directory so the hardware build is untouched. See README "Simulate in Wokwi".
+
+# Wokwi does not simulate Bluetooth: skip ble_link_init() instead of hanging in
+# the controller bring-up. The rest of the firmware runs normally.
+CONFIG_CAIPO_BLE_ENABLED=n
+
+# Console on UART0 (what the Wokwi serial monitor reads), with the S3 USB
+# Serial/JTAG kept as secondary so the same binary still prints on a real XIAO.
+CONFIG_ESP_CONSOLE_UART_DEFAULT=y
+CONFIG_ESP_CONSOLE_SECONDARY_USB_SERIAL_JTAG=y

@@ -1,0 +1,51 @@
+menu "Caipo BLE link"
+
+    config CAIPO_BLE_ENABLED
+        bool "Start the BLE link at boot"
+        default y
+        help
+            Off: ble_link_init() returns ESP_ERR_NOT_SUPPORTED without
+            touching the controller and the rest of the firmware runs
+            without the app link. Used by sdkconfig.wokwi, because Wokwi
+            does not simulate Bluetooth. Leave on for real hardware.
+
+    config CAIPO_BLE_NAME_PREFIX
+        string "Advertised name prefix"
+        default "CAIPO"
+        help
+            The device advertises this prefix followed by four hex digits
+            of its address, e.g. CAIPO3F2A. The app discovers by service
+            UUID and shows this name. Agreed contract: "CAIPO", no dash.
+
+    config CAIPO_BLE_HEARTBEAT_MS
+        int "Heartbeat interval (ms)"
+        range 200 5000
+        default 1000
+        help
+            Period of the [0x10][counter] notification on the control
+            characteristic once the link is encrypted and subscribed.
+            Contract (R01.4): 1000 ms; the app treats 3 s of silence as
+            disconnected.
+
+    config CAIPO_BLE_SUPERVISION_TIMEOUT_MS
+        int "Requested supervision timeout (ms)"
+        range 1000 32000
+        default 6000
+        help
+            Requested from the central right after connecting. The central
+            may refuse or change it. Contract: 6000 ms.
+
+    config CAIPO_BLE_CONN_ITVL_MIN_MS
+        int "Requested connection interval min (ms)"
+        range 8 4000
+        default 15
+
+    config CAIPO_BLE_CONN_ITVL_MAX_MS
+        int "Requested connection interval max (ms)"
+        range 8 4000
+        default 30
+        help
+            Apple accessory guidelines: min >= 15 ms, max >= min + 15 ms,
+            max * (latency + 1) * 3 <= supervision timeout.
+
+endmenu

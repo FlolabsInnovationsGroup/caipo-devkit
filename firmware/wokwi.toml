@@ -1,0 +1,13 @@
+[wokwi]
+version = 1
+
+# Application image from the Wokwi build directory (README "Simulate in Wokwi").
+# Wokwi reads build-wokwi/flasher_args.json next to it for the bootloader and
+# partition table. Do NOT point at a merged flash image: the ROM runs the
+# bootloader but the app never starts (same finding as the bridge project).
+firmware = "build-wokwi/firmware.bin"
+elf = "build-wokwi/firmware.elf"
+
+# Same port as CAIPO-esp32-and-RaspberryPi-bridge so scripts/wokwi_relay.py
+# from that project works unchanged for the Pi UART link.
+rfc2217ServerPort = 4010

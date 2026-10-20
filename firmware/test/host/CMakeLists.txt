@@ -15,6 +15,14 @@ cmake_minimum_required(VERSION 3.16)
       ${FW_ROOT}/components/touch_ttp223/include)
   add_test(NAME touch_gesture COMMAND test_touch_gesture)
 
+  # --- R03 transfer protocol (BLE app contract) ---
+  add_executable(test_r03
+      test_r03.c
+      ${FW_ROOT}/components/r03_transfer/r03.c)
+  target_include_directories(test_r03 PRIVATE
+      ${FW_ROOT}/components/r03_transfer/include)
+  add_test(NAME r03 COMMAND test_r03)
+
   # --- protocol codec ---
   add_executable(caipo_protocol_host_test
       test_protocol_host.c
@@ -28,5 +36,6 @@ cmake_minimum_required(VERSION 3.16)
 
   if(NOT MSVC)
       target_compile_options(test_touch_gesture PRIVATE -Wall -Wextra)
+      target_compile_options(test_r03 PRIVATE -Wall -Wextra)
       target_compile_options(caipo_protocol_host_test PRIVATE -Wall -Wextra)
   endif()
